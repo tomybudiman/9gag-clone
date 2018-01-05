@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "47122888092",
+    "project_id": "amplified-grail-186713"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47122888092:android:70bf3b147384947b",
+        "android_client_info": {
+          "package_name": "com.tomybudiman9gag.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47122888092-nr11oq9inp1g5uu92dqk5h9d3b1v1bob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tomybudiman9gag.android",
+            "certificate_hash": "3f7670c924927bb9ba458e71296c1bb1fe06f705"
+          }
+        },
+        {
+          "client_id": "47122888092-59caa0k556fmcrc04j3u6taofaqhn2vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhOCux0KPGgIYp98YOtCf_8zLUmi-05u4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
