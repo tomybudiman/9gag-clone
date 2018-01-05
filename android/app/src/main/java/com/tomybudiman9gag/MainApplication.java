@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import io.realm.react.RealmReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new ImagePickerPackage(),
-            new RNGoogleSigninPackage()
+            new RNGoogleSigninPackage(),
+						new RealmReactPackage()
       );
     }
 

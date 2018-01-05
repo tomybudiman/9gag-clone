@@ -42,24 +42,19 @@ class Login extends Component {
     });
   }
   loginUser(userData){
-    // axios.post(`${this.props.config.apiUrl}/api/users/add`,userData).then(({data}) => {
-    //   if(data.status){
-    //     const redirect = NavigationActions.reset({
-    //       index : 0,
-    //       actions : [
-    //         NavigationActions.navigate({routeName : 'Main'})
-    //       ]
-    //     });
-    //     this.props.navigation.dispatch(redirect);
-    //   }else{
-    //     console.warn(data.msg);
-    //     alert('Cannot SignIn! Contact System Administrator!');
-    //   }
-    // }).catch(err => {
-    //   console.warn(err);
-    //   alert('Cannot SignIn! Contact System Administrator!');
-    // });
     axios.post(`${this.props.config.apiUrl}/api/users/login-sm`,userData).then(({data}) => {
+      if(data.status){
+        const redirect = NavigationActions.reset({
+          index : 0,
+          actions : [
+            NavigationActions.navigate({routeName : 'Main'})
+          ]
+        });
+        this.props.navigation.dispatch(redirect);
+      }else{
+        console.warn(data.msg);
+        alert('Cannot SignIn! Contact System Administrator!');
+      }
     }).catch(err => {
       console.warn(err);
       alert('Cannot SignIn! Contact System Administrator!');

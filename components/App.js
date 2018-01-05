@@ -28,7 +28,7 @@ const Navigator = StackNavigator({
   Signin : {screen : Signin},
   UploadPreview : {screen : UploadPreview},
 },{
-  initialRouteName : 'Signin'
+  initialRouteName : 'Splash'
 });
 
 export default App;
