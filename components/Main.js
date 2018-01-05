@@ -8,16 +8,13 @@ import Fresh from './Fresh';
 import Home from './Home';
 
 class Main extends Component {
-  static navigationOptions = () => ({
-    header : null
-  });
   uploadPreview(imageData){
-    this.props.navigation.navigate('UploadPreview');
+    this.props.appNav.navigate('UploadPreview');
   }
   render(){
     return(
       <View style={{flex : 1}}>
-        <Navigator/>
+        <Navigator screenProps={this.props.appNav}/>
         <UploadButton preview={(imageData) => this.uploadPreview(imageData)}/>
       </View>
     )

@@ -1,5 +1,7 @@
 const ObjectId = require('mongoose').Types.ObjectId;
+const jwt = require('jsonwebtoken');
 const Photo = require('../models/Photo');
+const User = require('../models/Users');
 
 const add = (req,res) => {
   if(!req.uploadstatus.status){
@@ -63,11 +65,44 @@ const upvote = (req,res) => {
 }
 
 const downvote = (req,res) => {
+  res.send('downvote');
+}
+
+const cekLogin = (req,res,next) => {
+  if(req.headers.token == '' || req.headers.token == null){
+    res.send({
+      status : true,
+      login : false,
+      msg : 'Please login first!'
+    });
+  }else{
+    jwt.verify(req.headers.token,process.env.TOKENSECRET,(err,decoded) => {
+      User.findOne({
+        _id : ObjectId(decoded._id)
+      }).then(check => {
+        if(check){
+          next();
+        }else{
+          res.send({
+            status : true,
+            login : false,
+            msg : 'Please login first!'
+          });
+        }
+      }).catch(err => {
+        res.send({
+          status : false,
+          msg : err
+        });
+      });
+    });
+  }
 }
 
 module.exports = {
   add,
   fetchPhotos,
   upvote,
-  downvote
+  downvote,
+  cekLogin
 };

@@ -10,7 +10,7 @@ class UploadButton extends Component {
     ImagePicker.showImagePicker(response => {
       if(!response.didCancel && !response.error && !response.customButton){
         // Action here
-        this.props.setUploadPreview(response);
+        this.props.setUploadPreview(response); // Redux
         this.props.preview();
       }
     });
