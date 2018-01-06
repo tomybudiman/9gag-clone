@@ -1,5 +1,5 @@
 const initialState = {
-  apiUrl : 'http://10.11.12.227:8082',
+  apiUrl : 'http://192.168.56.1:8082',
   loggedin : ''
 }
 
