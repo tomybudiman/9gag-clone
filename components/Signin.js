@@ -12,6 +12,10 @@ import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
+// Realm
+import Realm from 'realm';
+import {LoggedinSchema} from '../database/model';
+
 const styles = StyleSheet.create({
   container : {
     padding : 20
@@ -44,6 +48,18 @@ class Login extends Component {
   loginUser(userData){
     axios.post(`${this.props.config.apiUrl}/api/users/login-sm`,userData).then(({data}) => {
       if(data.status){ // Jika berhasil login maka server akan mengirim token
+        Realm.open({
+          schema : [LoggedinSchema]
+        }).then(realm => {
+          realm.write(() => {
+            realm.create('Loggedin',{
+              username : userData.username,
+              token : data.token
+            });
+          });
+        }).catch(err => {
+          console.warn(err);
+        });
         const redirect = NavigationActions.reset({
           index : 0,
           actions : [

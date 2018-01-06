@@ -1,6 +1,7 @@
 export const LoggedinSchema = {
   name : 'Loggedin',
   properties : {
-    username : 'string'
+    username : 'string',
+    token : 'string'
   }
 }

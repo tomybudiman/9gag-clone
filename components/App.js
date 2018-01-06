@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {Text} from 'react-native';
 
 import {fetchPhotos} from '../redux/actions/actionPhoto';
+import {checkLogin} from '../redux/actions/actionUser';
 import store from '../redux';
 
 // Main Navigator
@@ -14,6 +15,7 @@ import Main from './Main';
 
 class App extends Component {
   componentWillMount(){
+    store.dispatch(checkLogin());
     store.dispatch(fetchPhotos());
   }
   render(){
