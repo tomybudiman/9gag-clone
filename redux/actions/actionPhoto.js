@@ -21,7 +21,9 @@ export const addNewPhoto = (photo) => {
       _id : photo._id,
       title : getState().reducerPhoto.uploadTitle,
       url : `data:image/png;base64,${getState().reducerPhoto.uploadPreview.data}`,
-      height : photo.height
+      height : photo.height,
+      downvotes : [],
+      upvotes : []
     });
     dispatch({
       type : 'ADD_NEW_PHOTO',
