@@ -10,9 +10,9 @@ router.get('/all',photoControl.fetchPhotos);
 router.post('/add',uploader.multer.any(),uploader.uploadGoogleStorage,photoControl.add);
 
 // Upvote
-router.post('/upvote',photoControl.cekLogin,photoControl.upvote);
+router.post('/upvote',photoControl.cekLogin,photoControl.vote);
 
 // Downvote
-router.post('/downvote',photoControl.cekLogin,photoControl.downvote);
+router.post('/downvote',photoControl.cekLogin,photoControl.vote);
 
 module.exports = router;

@@ -45,13 +45,54 @@ const fetchPhotos = (req,res) => {
   });
 }
 
-const upvote = (req,res) => {
+const vote = (req,res) => {
   Photo.findOne({
     _id : ObjectId(req.body.postId)
   }).then(post => {
-    if(post){
-    }else{
+    if(post){ // Jika post
+      switch(req.headers.type){
+        case 'upvote':
+          post.downvotes.splice(post.downvotes.indexOf(req.headers.userId),1);
+          if(post.upvotes.indexOf(req.headers.userId) == -1){
+            post.upvotes.push(req.headers.userId);
+          }
+          Photo.updateOne({
+            _id : ObjectId(req.body.postId)
+          },{
+            upvotes : post.upvotes,
+            downvotes : post.downvotes
+          }).then(resp => {
+            res.send({
+              login : true,
+              status : true,
+              userId : req.headers.userId,
+              msg : resp
+            });
+          });
+          break;
+        case 'downvote':
+          post.upvotes.splice(post.upvotes.indexOf(req.headers.userId),1);
+          if(post.downvotes.indexOf(req.headers.userId) == -1){
+            post.downvotes.push(req.headers.userId)
+          }
+          Photo.updateOne({
+            _id : ObjectId(req.body.postId)
+          },{
+            upvotes : post.upvotes,
+            downvotes : post.downvotes
+          }).then(resp => {
+            res.send({
+              login : true,
+              status : true,
+              userId : req.headers.userId,
+              msg : resp
+            });
+          });
+          break;
+      }
+    }else{ // Jika post tidak ditemukan
       res.send({
+        login : true,
         status : false,
         msg : 'Post not found!'
       });
@@ -62,10 +103,6 @@ const upvote = (req,res) => {
       msg : err
     });
   });
-}
-
-const downvote = (req,res) => {
-  res.send('downvote');
 }
 
 const cekLogin = (req,res,next) => {
@@ -81,6 +118,7 @@ const cekLogin = (req,res,next) => {
         _id : ObjectId(decoded._id)
       }).then(check => {
         if(check){
+          req.headers.userId = decoded._id;
           next();
         }else{
           res.send({
@@ -102,7 +140,6 @@ const cekLogin = (req,res,next) => {
 module.exports = {
   add,
   fetchPhotos,
-  upvote,
-  downvote,
+  vote,
   cekLogin
 };
