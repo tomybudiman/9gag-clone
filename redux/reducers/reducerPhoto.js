@@ -4,6 +4,7 @@ const initialState = {
     filename : '',
     data : ''
   },
+  currentPhoto: {},
   uploadTitle : 'Your title here'
 }
 
@@ -22,6 +23,12 @@ const reducer = (state = initialState,action) => {
       return{...state, photos : action.photos}
     case 'UPDATE_VOTES':
       return{...state, photos : action.newPhotos}
+      break;
+    case 'GET_PHOTO_DETAIL':
+      return{...state, currentPhoto : state.photos.reduce(photo => {
+        if (photo._id === action.postId)
+          return photo
+      })}
       break;
     default:
       return state;

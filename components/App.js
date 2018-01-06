@@ -12,6 +12,7 @@ import UploadPreview from './UploadPreview';
 import Signin from './Signin';
 import Splash from './Splash';
 import Main from './Main';
+import ImageDetail from './ImageDetail'
 
 class App extends Component {
   componentWillMount(){
@@ -41,6 +42,7 @@ const MainNavigator = StackNavigator({
   },
   Signin : {screen : Signin},
   UploadPreview : {screen : UploadPreview},
+  ImageDetail : {screen : ImageDetail},
 },{
   initialRouteName : 'Splash'
 });
