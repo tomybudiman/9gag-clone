@@ -54,13 +54,18 @@ class Home extends Component {
       console.warn(err);
     });
   }
-  postDetail(){}
+  
+  postDetail (photoId) {
+    this.props.screenProps.navigate('ImageDetail', {photoId : photoId})
+  }
+  
   render(){
     return(
       <FlatList
         data={this.props.photos}
         renderItem={({item}) => (
           <View style={styles.eachPost}>
+            {console.log(item)}
             <Text style={styles.title}>{item.title}</Text>
             <Image source={{uri : item.url}} style={{width : '100%', height : item.height + 20}}/>
             <View style={{flexWrap : 'wrap', flexDirection : 'row', paddingTop : 10}}>
@@ -84,7 +89,7 @@ class Home extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.buttonAct}
-                onPress={() => this.postDetail()}>
+                onPress={() => this.postDetail(item._id)}>
                 <Image
                   resizeMode="contain"
                   style={{alignSelf : 'center', height : 25}}
