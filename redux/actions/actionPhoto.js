@@ -46,3 +46,31 @@ export const fetchPhotos = () => {
     });
   }
 }
+
+export const updateVotes = (postId,type,userId) => {
+  return (dispatch,getState) => {
+    const newPhotos = getState().reducerPhoto.photos.map((post,i) => {
+      if(post._id == postId){
+        switch(type){
+          case 'upvote':
+            post.downvotes.splice(post.downvotes.indexOf(userId),1);
+            if(post.upvotes.indexOf(userId) == -1){
+              post.upvotes.push(userId)
+            }
+            break;
+          case 'downvote':
+            post.upvotes.splice(post.upvotes.indexOf(userId),1);
+            if(post.downvotes.indexOf(userId) == -1){
+              post.downvotes.push(userId)
+            }
+            break;
+        }
+      }
+      return post;
+    });
+    dispatch({
+      type : 'UPDATE_VOTES',
+      newPhotos
+    });
+  }
+}

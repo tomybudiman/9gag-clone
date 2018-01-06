@@ -12,6 +12,8 @@ import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
 import axios from 'axios';
 
+import {updateVotes} from '../redux/actions/actionPhoto';
+
 const styles = StyleSheet.create({
   eachPost : {
     marginTop : 5,
@@ -34,11 +36,13 @@ class Home extends Component {
       postId : id
     },{
       headers : {
-        token : ''
+        token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRlYzZhMWRmMGEzMTE1MTVhNDcwNTgiLCJpYXQiOjE1MTUxMzQ1OTZ9.7MGYJQ3q2h2HdfmsHd1JQr3UFYOZR8vcAALOrBUcaBk',
+        type : type
       }
     }).then(({data}) => {
       if(data.status){
         if(data.login){
+          this.props.updateVotes(id,type,data.userId);
         }else{
           this.props.screenProps.navigate('Signin');
         }
@@ -50,6 +54,7 @@ class Home extends Component {
       console.warn(err);
     });
   }
+  postDetail(){}
   render(){
     return(
       <FlatList
@@ -57,7 +62,7 @@ class Home extends Component {
         renderItem={({item}) => (
           <View style={styles.eachPost}>
             <Text style={styles.title}>{item.title}</Text>
-            <Image source={{uri : item.url}} style={{width : '100%', height : item.height}}/>
+            <Image source={{uri : item.url}} style={{width : '100%', height : item.height + 20}}/>
             <View style={{flexWrap : 'wrap', flexDirection : 'row', paddingTop : 10}}>
               <TouchableOpacity
                 style={styles.buttonAct}
@@ -66,7 +71,7 @@ class Home extends Component {
                   resizeMode="contain"
                   style={{alignSelf : 'center', height : 25}}
                   source={require('../media/arrow-up-icon.png')}/>
-                <Text style={{alignSelf : 'center'}}>0</Text>
+                <Text style={{alignSelf : 'center'}}>{item.upvotes.length}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.buttonAct}
@@ -75,9 +80,11 @@ class Home extends Component {
                   resizeMode="contain"
                   style={{alignSelf : 'center', height : 25}}
                   source={require('../media/arrow-down-icon.png')}/>
-                <Text style={{alignSelf : 'center'}}>0</Text>
+                <Text style={{alignSelf : 'center'}}>{item.downvotes.length}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonAct}>
+              <TouchableOpacity
+                style={styles.buttonAct}
+                onPress={() => this.postDetail()}>
                 <Image
                   resizeMode="contain"
                   style={{alignSelf : 'center', height : 25}}
@@ -99,4 +106,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,null)(Home);
+const mapDispatchToProps = (dispatch) => {
+  return{
+    updateVotes : (postId,type,userId) => dispatch(updateVotes(postId,type,userId))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

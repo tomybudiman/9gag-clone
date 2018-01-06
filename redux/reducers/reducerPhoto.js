@@ -20,6 +20,9 @@ const reducer = (state = initialState,action) => {
       return{...state, photos : action.newPhotos};
     case 'FETCH_PHOTOS':
       return{...state, photos : action.photos}
+    case 'UPDATE_VOTES':
+      return{...state, photos : action.newPhotos}
+      break;
     default:
       return state;
   }
