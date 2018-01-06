@@ -16,6 +16,8 @@ import axios from 'axios';
 import Realm from 'realm';
 import {LoggedinSchema} from '../database/model';
 
+import {checkLogin} from '../redux/actions/actionUser';
+
 const styles = StyleSheet.create({
   container : {
     padding : 20
@@ -57,6 +59,7 @@ class Login extends Component {
               token : data.token
             });
           });
+          this.props.setSession();
         }).catch(err => {
           console.warn(err);
         });
@@ -115,4 +118,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,null)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return{
+    setSession : () => dispatch(checkLogin())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

@@ -36,7 +36,7 @@ class Home extends Component {
       postId : id
     },{
       headers : {
-        token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRlYzZhMWRmMGEzMTE1MTVhNDcwNTgiLCJpYXQiOjE1MTUxMzQ1OTZ9.7MGYJQ3q2h2HdfmsHd1JQr3UFYOZR8vcAALOrBUcaBk',
+        token : this.props.config.loggedin,
         type : type
       }
     }).then(({data}) => {
