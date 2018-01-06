@@ -75,8 +75,6 @@ export const updateVotes = (postId,type,userId) => {
   }
 }
 
-
-
 export const getPhoto = (postId) => {
   return {
     type: 'GET_PHOTO_DETAIL',
