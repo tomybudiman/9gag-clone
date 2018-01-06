@@ -31,6 +31,39 @@ const loginSocmed = (req,res) => {
   });
 }
 
+const cekLogin = (req,res,next) => {
+  if(req.headers.token == '' || req.headers.token == null){
+    res.send({
+      status : true,
+      login : false,
+      msg : 'Please login first!'
+    });
+  }else{
+    jwt.verify(req.headers.token,process.env.TOKENSECRET,(err,decoded) => {
+      User.findOne({
+        _id : ObjectId(decoded._id)
+      }).then(check => {
+        if(check){
+          req.headers.userId = decoded._id;
+          next();
+        }else{
+          res.send({
+            status : true,
+            login : false,
+            msg : 'Please login first!'
+          });
+        }
+      }).catch(err => {
+        res.send({
+          status : false,
+          msg : err
+        });
+      });
+    });
+  }
+}
+
 module.exports = {
-  loginSocmed
+  loginSocmed,
+  cekLogin
 };

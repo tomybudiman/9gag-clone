@@ -7,13 +7,17 @@ import {setUploadPreview} from '../redux/actions/actionPhoto';
 
 class UploadButton extends Component {
   selectFile(){
-    ImagePicker.showImagePicker(response => {
-      if(!response.didCancel && !response.error && !response.customButton){
-        // Action here
-        this.props.setUploadPreview(response); // Redux
-        this.props.preview();
-      }
-    });
+    if(this.props.config.loggedin == ''){
+      this.props.screenProps.navigate('Signin');
+    }else{
+      ImagePicker.showImagePicker(response => {
+        if(!response.didCancel && !response.error && !response.customButton){
+          // Action here
+          this.props.setUploadPreview(response); // Redux
+          this.props.preview();
+        }
+      });
+    }
   }
   render(){
     return(
@@ -25,10 +29,16 @@ class UploadButton extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return{
+    config : state.reducerConfig
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return{
     setUploadPreview : (imageData) => dispatch(setUploadPreview(imageData))
   }
 }
 
-export default connect(null,mapDispatchToProps)(UploadButton);
+export default connect(mapStateToProps,mapDispatchToProps)(UploadButton);

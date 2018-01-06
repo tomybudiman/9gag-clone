@@ -15,7 +15,9 @@ class Main extends Component {
     return(
       <View style={{flex : 1}}>
         <Navigator screenProps={this.props.appNav}/>
-        <UploadButton preview={(imageData) => this.uploadPreview(imageData)}/>
+        <UploadButton
+          preview={(imageData) => this.uploadPreview(imageData)}
+          screenProps={this.props.appNav}/>
       </View>
     )
   }
