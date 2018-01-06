@@ -43,7 +43,7 @@ class Login extends Component {
   }
   loginUser(userData){
     axios.post(`${this.props.config.apiUrl}/api/users/login-sm`,userData).then(({data}) => {
-      if(data.status){
+      if(data.status){ // Jika berhasil login maka server akan mengirim token
         const redirect = NavigationActions.reset({
           index : 0,
           actions : [
