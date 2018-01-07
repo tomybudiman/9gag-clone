@@ -6,13 +6,17 @@ import {
   Button,
   FlatList,
   StyleSheet,
+  RefreshControl,
   TouchableOpacity
 } from 'react-native';
 import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
 import axios from 'axios';
 
-import {updateVotes} from '../redux/actions/actionPhoto';
+import {
+  updateVotes,
+  fetchPhotos
+} from '../redux/actions/actionPhoto';
 
 const styles = StyleSheet.create({
   eachPost : {
@@ -31,6 +35,12 @@ const styles = StyleSheet.create({
 });
 
 class Trending extends Component {
+  constructor(){
+    super();
+    this.state = {
+      refreshing : false
+    }
+  }
   vote(type,id){
     axios.post(`${this.props.config.apiUrl}/api/images/${type}`,{
       postId : id
@@ -57,6 +67,12 @@ class Trending extends Component {
 
   postDetail (photoId) {
     this.props.screenProps.navigate('ImageDetail', {photoId : photoId})
+  }
+
+  reloadPosts(){
+    this.setState({refreshing : true});
+    this.props.fetchPosts();
+    this.setState({refreshing : false});
   }
 
   render(){
@@ -99,7 +115,10 @@ class Trending extends Component {
             </View>
           </View>
         )}
-        keyExtractor={item => item._id}/>
+        keyExtractor={item => item._id}
+        refreshControl={
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.reloadPosts()}/>
+        }/>
     )
   }
 }
@@ -113,6 +132,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return{
+    fetchPosts : () => dispatch(fetchPhotos()),
     updateVotes : (postId,type,userId) => dispatch(updateVotes(postId,type,userId))
   }
 }
