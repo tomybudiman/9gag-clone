@@ -7,9 +7,20 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux';
 
+import Comments from './Comments'
+import Comment  from './Comment';
+
 import {getPhoto} from '../redux/actions/actionPhoto'
 
+
 class ImageDetail extends Component {
+  
+  constructor(){
+    super()
+    this.state = {
+      comments: []
+    }
+  }
   
   static navigationOptions(){
     return({
@@ -33,7 +44,9 @@ class ImageDetail extends Component {
     return (
       <ScrollView>
         {console.log(this.props.photo)}
-        <Image source={{uri : this.props.photo.url}} style={{width : '100%', height : this.props.photo.height + 20, marginTop: 20}} />
+        <Image source={{uri : this.props.photo.url}} style={{width : '100%', height : this.props.photo.height + 20, marginTop: 20, marginBottom: '10%'}} />
+        <Comment/>
+        {/* <Comments/> */}
       </ScrollView>
     )
   }
@@ -41,13 +54,15 @@ class ImageDetail extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    photo : state.reducerPhoto.currentPhoto
+    photo : state.reducerPhoto.currentPhoto,
+    comments : state.reducerComment.comments
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPhoto : (photoId) => dispatch(getPhoto(photoId))
+    getPhoto : (photoId) => dispatch(getPhoto(photoId)),
+    getComments : (photoId) => dispatch(getComments(photoId))
   }
 }
 

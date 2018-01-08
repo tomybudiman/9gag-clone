@@ -16,6 +16,9 @@ app.get('/',(req,res) => {
 const images = require('./routes/images');
 app.use('/api/images',images);
 
+const comments = require('./routes/comments');
+app.use('/api/comments',comments)
+
 const users = require('./routes/users');
 app.use('/api/users',users);
 
